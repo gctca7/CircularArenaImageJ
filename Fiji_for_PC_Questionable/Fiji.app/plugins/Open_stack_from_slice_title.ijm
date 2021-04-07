@@ -1,0 +1,20 @@
+setBatchMode("true");
+dirTiff ="X:\\Yoshi\\Registration\\JBA_export_tiff\\";
+dirMask = "X:\\Yoshi\\Registration\\Mask\\Mask_original\\";
+MaskTitle =getTitle();
+MaskTitle = substring(MaskTitle, 0, lengthOf(MaskTitle)-4);
+SliceTitle= getMetadata("Label");
+Title = "Red:" + MaskTitle + "  Green:" + SliceTitle;
+Path_Mask = dirMask + MaskTitle + ".tif"; 
+Path_tif = dirTiff +SliceTitle +".tif";
+open(Path_Mask);
+rename("1");
+open(Path_tif);
+rename("2");
+open("X:\\Yoshi\\Registration\\JFRC2010.tif");
+rename("3");
+run("Merge Channels...", "c1=1 c2=2 c3=3 create ignore");
+selectWindow("Composite");
+rename(Title);
+setBatchMode("false");
+
